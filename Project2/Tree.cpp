@@ -1,7 +1,8 @@
 #include <iostream>
+#include<string>
 #include "Tree.hpp"
 using namespace std;
-
+using namespace ariel;
 
 Tree::Tree()
 {
@@ -9,13 +10,21 @@ Tree::Tree()
 	TreeSize = 0;
 }
 
+void recursive_Delete_TRee(TNode* head) {
+	
+	TNode* current = head;
+	if (current->getleft() != NULL)
+		recursive_Delete_TRee(current->getleft());
+	if (current->getright() != NULL)
+		recursive_Delete_TRee(current->getright());
+	delete current;
+
+}
+
+
 Tree::~Tree()
 {
-	if (head->getleft() != NULL)
-		delete head->getleft();
-	if (head->getright() != NULL)
-		delete head->getright();
-	delete head;
+	recursive_Delete_TRee(head);
 }
 
 void Tree::setHead(TNode* t) {
@@ -27,13 +36,15 @@ TNode* Tree::gethead() {
 }
 
 void Tree::insert(int i) {
-	
-	if (contains(i))
-		throw string(i + " is allready in the tree!");
 
+	if (contains(i))
+	{
+		throw string(to_string(i) + " is allready in the tree!");
+		return;
+	}
 	TreeSize++;
 	TNode* temp = new TNode(i);
-	
+
 
 	if (head == NULL) {
 
@@ -88,7 +99,7 @@ bool Tree::contains(int i) {
 }
 
 
-TNode* Tree:: search(int i) {
+TNode* Tree::search(int i) {
 	TNode* current = head;
 	while (current != NULL) {
 		if (current->getdata() == i) {
@@ -102,16 +113,18 @@ TNode* Tree:: search(int i) {
 		}
 	}
 	return NULL;
-	
+
 }
 
 
 
 int Tree::remove(int i) {
-	
-	if (!contains(i))
-		throw string(i + " is not in the tree!");
 
+	if (!contains(i))
+	{
+		throw string(to_string(i) + " is not in the tree!");
+		return 2147483647;
+	}
 	TreeSize--;
 	TNode* current = head;
 	while (current->getdata() != i)
@@ -131,7 +144,7 @@ int Tree::remove(int i) {
 
 	if (current->getleft() == NULL && current->getright() == NULL) {
 		if (father == NULL) {
-			
+
 			head = NULL;
 
 		}
@@ -146,7 +159,7 @@ int Tree::remove(int i) {
 		}
 
 	}
-		//case 2:current has only child
+	//case 2:current has only child
 	else if (current->getleft() == NULL) {
 		if (father == NULL) {
 			head = current->getright();
@@ -165,7 +178,7 @@ int Tree::remove(int i) {
 		if (father == NULL) {
 			head = current->getleft();
 			head->setfather(NULL);
-		
+
 		}
 		else if (i < father->getdata()) {
 			father->setleft(current->getleft());
@@ -196,34 +209,36 @@ int Tree::size() {
 
 int Tree::root() {
 	if (head == NULL)
+	{
 		throw string("root is null!");
+	}
 	return head->getdata();
 }
 
 int Tree::parent(int i) {
 	TNode* temp = search(i);
 	if (temp == NULL)
-		throw string(i + " is not in the tree");
-	if(temp -> getfather() == NULL)
-		throw string(i + " does not have a parent");
+		throw string(to_string(i) + " is not in the tree");
+	if (temp->getfather() == NULL)
+		throw string(to_string(i) + " does not have a parent");
 	return temp->getfather()->getdata();
 }
 
 int Tree::left(int i) {
 	TNode* temp = search(i);
 	if (temp == NULL)
-		throw string(i + " is not in the tree");
+		throw string(to_string(i) + " is not in the tree");
 	if (temp->getleft() == NULL)
-		throw string(i + " does not have a left child");
+		throw string(to_string(i) + " does not have a left child");
 	return temp->getleft()->getdata();
 }
 
 int Tree::right(int i) {
 	TNode* temp = search(i);
 	if (temp == NULL)
-		throw string(i + " is not in the tree");
+		throw string(to_string(i) + " is not in the tree");
 	if (temp->getleft() == NULL)
-		throw string(i + " does not have a right child");
+		throw string(to_string(i) + " does not have a right child");
 	return temp->getright()->getdata();
 }
 
@@ -248,28 +263,5 @@ void Tree::print() {
 
 
 	functionvisit(head);
-
-}
-
-
-
-
-int main()
-{
-	Tree t;
-	t.insert(5);
-	t.insert(4);
-	t.insert(7);
-	t.insert(9);
-	t.insert(10);
-	t.insert(1);
-	
-	t.print();
-	cout << " " << endl;
-	t.remove(4);
-	t.remove(9);
-	t.remove(1);
-	t.print();
-	system("pause");
 
 }
