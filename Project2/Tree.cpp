@@ -11,14 +11,16 @@ Tree::Tree()
 }
 
 void recursive_Delete_TRee(TNode* head) {
-	
-	TNode* current = head;
-	if (current->getleft() != NULL)
-		recursive_Delete_TRee(current->getleft());
-	if (current->getright() != NULL)
-		recursive_Delete_TRee(current->getright());
-	delete current;
 
+	TNode* current = head;
+	if (current != NULL)
+	{
+		if (current->getleft() != NULL)
+			recursive_Delete_TRee(current->getleft());
+		if (current->getright() != NULL)
+			recursive_Delete_TRee(current->getright());
+		delete current;
+	}
 }
 
 
@@ -44,7 +46,6 @@ void Tree::insert(int i) {
 	}
 	TreeSize++;
 	TNode* temp = new TNode(i);
-
 
 	if (head == NULL) {
 
