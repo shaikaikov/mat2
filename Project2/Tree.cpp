@@ -238,7 +238,7 @@ int Tree::right(int i) {
 	TNode* temp = search(i);
 	if (temp == NULL)
 		throw string(to_string(i) + " is not in the tree");
-	if (temp->getleft() == NULL)
+	if (temp->getright() == NULL)
 		throw string(to_string(i) + " does not have a right child");
 	return temp->getright()->getdata();
 }
