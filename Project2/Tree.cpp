@@ -1,3 +1,17 @@
+
+
+
+/**
+*
+* here we built the Tree we use the help of file that was in data structure module of ariel site
+*
+*
+*
+*@authers-shai and sela
+*
+*/
+
+
 #include <iostream>
 #include<string>
 #include "Tree.hpp"
@@ -10,6 +24,8 @@ Tree::Tree()
 	TreeSize = 0;
 }
 
+
+///delete the Tree by destructor
 void recursive_Delete_TRee(TNode* head) {
 
 	TNode* current = head;
@@ -23,7 +39,7 @@ void recursive_Delete_TRee(TNode* head) {
 	}
 }
 
-
+///destructor
 Tree::~Tree()
 {
 	recursive_Delete_TRee(head);
@@ -37,11 +53,14 @@ TNode* Tree::gethead() {
 	return head;
 }
 
+
+/// insert-if the number little than the node that he meet go to the left untill null.
+///else if he bigger the node go to right untill null.
 void Tree::insert(int i) {
 
-	if (contains(i))
+	if (contains(i))                                                    ///contains cheak if the data is alredidy exist if exist throw exception.
 	{
-		throw string(to_string(i) + " is allready in the tree!");
+		throw string(to_string(i) + " is allready in the tree!");      
 		return;
 	}
 	TreeSize++;
@@ -82,7 +101,7 @@ void Tree::insert(int i) {
 	}
 
 }
-
+///cheak of the data is alredy exist if yes return true else continue to search untill find or in the end return false
 bool Tree::contains(int i) {
 	TNode* current = head;
 	while (current != NULL) {
@@ -99,7 +118,7 @@ bool Tree::contains(int i) {
 	return false;
 }
 
-
+///function we add that like contain exactly just return address of TNode
 TNode* Tree::search(int i) {
 	TNode* current = head;
 	while (current != NULL) {
@@ -118,7 +137,7 @@ TNode* Tree::search(int i) {
 }
 
 
-
+///remove the bst tree.
 int Tree::remove(int i) {
 
 	if (!contains(i))
@@ -204,10 +223,13 @@ int Tree::remove(int i) {
 	return i;
 }
 
+
+///return the size
+
 int Tree::size() {
 	return TreeSize;
 }
-
+///return the data of the head.if null so is exception.
 int Tree::root() {
 	if (head == NULL)
 	{
@@ -215,6 +237,8 @@ int Tree::root() {
 	}
 	return head->getdata();
 }
+
+///use the function of search if the node null or his father null -exception.ifthe father exsit return the data
 
 int Tree::parent(int i) {
 	TNode* temp = search(i);
@@ -224,7 +248,7 @@ int Tree::parent(int i) {
 		throw string(to_string(i) + " does not have a parent");
 	return temp->getfather()->getdata();
 }
-
+///like the parent just in left.
 int Tree::left(int i) {
 	TNode* temp = search(i);
 	if (temp == NULL)
@@ -233,7 +257,7 @@ int Tree::left(int i) {
 		throw string(to_string(i) + " does not have a left child");
 	return temp->getleft()->getdata();
 }
-
+///like the parent just in right
 int Tree::right(int i) {
 	TNode* temp = search(i);
 	if (temp == NULL)
@@ -244,7 +268,7 @@ int Tree::right(int i) {
 }
 
 
-
+///print the Tree-inorder order.
 void functionvisit(TNode* node) {
 
 	if (node->getleft() != NULL) {
@@ -259,7 +283,7 @@ void functionvisit(TNode* node) {
 
 }
 
-
+///go to the print function
 void Tree::print() {
 
 
